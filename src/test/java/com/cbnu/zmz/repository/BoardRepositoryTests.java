@@ -25,4 +25,5 @@ public class BoardRepositoryTests {
         System.out.println(boardRepository.getClass().getName());
 //        결과 $Proxy108  왜냐면 해당 객체에 클래스 이름이 없기 때문에 $가 붙어서 나옴
     }
+
 }
