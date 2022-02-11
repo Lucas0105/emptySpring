@@ -37,15 +37,10 @@ public class User {
     @Column(length = 500, nullable = true)
     String user_text;
 
+    @ManyToOne
+    @JoinColumn(name="authority_id")
     @Column(columnDefinition = "integer default 1 not null")
-    int authority_id;
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    private Set<UserAuthority> roleSet;    //ClubMemberRole 여러개가 들어갈 수 있다.
-
-    public void addMemberRole(UserAuthority userAuthority){
-        roleSet.add(userAuthority);
-    }
+    UserAuthority userAuthority;
 
 //    @Column(length = 30, nullable = false)
 //    String user_picture;

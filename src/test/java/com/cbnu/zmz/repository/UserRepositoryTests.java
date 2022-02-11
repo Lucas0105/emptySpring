@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -13,6 +14,10 @@ public class UserRepositoryTests {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserAuthorityRepository userAuthorityRepository;
+
 
     @Test
     public void testClass(){
@@ -22,15 +27,20 @@ public class UserRepositoryTests {
 
     @Test
     public void testInsertDummy(){
-        IntStream.rangeClosed(1, 10).forEach(i ->{
+
+        Optional<UserAuthority> result = userAuthorityRepository.findById(2);
+
+        UserAuthority userAuthority = result.get();
+
+
+        IntStream.rangeClosed(101, 110).forEach(i ->{
             User user = User.builder()
                     .user_id("test..." + i)
                     .user_name("name"+i)
                     .user_pw("1234")
                     .user_mail("dj@gmail.com")
+                    .authority_id(userAuthority)
                     .build();
-
-            user.addMemberRole(UserAuthority.USER);
 
             userRepository.save(user);
         });
