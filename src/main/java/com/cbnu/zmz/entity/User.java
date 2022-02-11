@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -36,8 +37,10 @@ public class User {
     @Column(length = 500, nullable = true)
     String user_text;
 
+    @ManyToOne
+    @JoinColumn(name="authority_id")
     @Column(columnDefinition = "integer default 1 not null")
-    int authority_id;
+    UserAuthority userAuthority;
 
 //    @Column(length = 30, nullable = false)
 //    String user_picture;
