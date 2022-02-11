@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -38,6 +39,13 @@ public class User {
 
     @Column(columnDefinition = "integer default 1 not null")
     int authority_id;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Set<UserAuthority> roleSet;    //ClubMemberRole 여러개가 들어갈 수 있다.
+
+    public void addMemberRole(UserAuthority userAuthority){
+        roleSet.add(userAuthority);
+    }
 
 //    @Column(length = 30, nullable = false)
 //    String user_picture;
