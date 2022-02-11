@@ -38,10 +38,19 @@ public class User {
     String user_text;
 
     @ManyToOne
-    @JoinColumn(name="authority_id")
-    @Column(columnDefinition = "integer default 1 not null")
+    @JoinColumn(name="authority_id", referencedColumnName = "authority_id")
     UserAuthority userAuthority;
 
-//    @Column(length = 30, nullable = false)
-//    String user_picture;
+
+    //    @ManyToOne
+//    @JoinTable(name = "UserAuthority",
+//            joinColumns = @JoinColumn(name = "authority_id"),
+//            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+//
+
+//    @JoinColumns(value = {@JoinColumn(name="authority_id")},
+//            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+//    UserAuthority userAuthority;
+
+
 }

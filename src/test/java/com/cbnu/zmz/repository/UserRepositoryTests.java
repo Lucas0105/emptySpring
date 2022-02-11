@@ -22,7 +22,6 @@ public class UserRepositoryTests {
     @Test
     public void testClass(){
         System.out.println(userRepository.getClass().getName());
-//        결과 $Proxy108  왜냐면 해당 객체에 클래스 이름이 없기 때문에 $가 붙어서 나옴
     }
 
     @Test
@@ -33,13 +32,13 @@ public class UserRepositoryTests {
         UserAuthority userAuthority = result.get();
 
 
-        IntStream.rangeClosed(101, 110).forEach(i ->{
+        IntStream.rangeClosed(1, 110).forEach(i ->{
             User user = User.builder()
                     .user_id("test..." + i)
                     .user_name("name"+i)
                     .user_pw("1234")
                     .user_mail("dj@gmail.com")
-                    .authority_id(userAuthority)
+                    .userAuthority(userAuthority)
                     .build();
 
             userRepository.save(user);
