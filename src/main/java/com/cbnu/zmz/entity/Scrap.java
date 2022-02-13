@@ -16,8 +16,13 @@ import java.util.Date;
 public class Scrap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String user_id;
+    Long scrap_id;
 
-//    @Column(length = 100, nullable = true)
-//    Long post_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    Board board;
 }

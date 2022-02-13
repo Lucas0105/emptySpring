@@ -4,9 +4,10 @@ import lombok.*;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name="notice")
+@Table(name = "notice")
 @ToString
 @Getter
 @Builder
@@ -17,10 +18,15 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long notice_id;
 
-    //    @Column(length = 100, nullable = false)
-//    String user_id;
-    @Column(length = 100, nullable = false)
-    long notice_kinds_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
     @Column(length = 1, nullable = false)
     Boolean notice_status;
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Set<Notice_Kinds> notice_kinds_id;
+
+    public void addNoticeKinds(Notice_Kinds notice_kinds){
+        notice_kinds_id.add(notice_kinds);
+    }
 }
