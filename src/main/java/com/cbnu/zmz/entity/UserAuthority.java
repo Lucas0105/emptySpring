@@ -4,22 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="userAuthority")
-@ToString
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserAuthority {
+public enum UserAuthority {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="authority_id")
-    int authority_id;
-
-    @Column(length = 50)
-    String authority_name;
+    USER,ADVERTISEMENT,MANAGER,ADMIN, BAN
 
 }

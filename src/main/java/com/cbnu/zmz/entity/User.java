@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,7 @@ public class User {
     @Column(length = 30, nullable = false)
     String user_name;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 255, nullable = false)
     String user_pw;
 
     @Column(nullable = true)
@@ -37,9 +38,14 @@ public class User {
     @Column(length = 500, nullable = true)
     String user_text;
 
-    @ManyToOne
-    @JoinColumn(name="authority_id", referencedColumnName = "authority_id")
-    UserAuthority userAuthority;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<UserAuthority> roleSet = new HashSet<>();
+
+    public void addMemberRole(UserAuthority userAuthority){
+        roleSet.add(userAuthority);
+    }
+
 
 
     //    @ManyToOne

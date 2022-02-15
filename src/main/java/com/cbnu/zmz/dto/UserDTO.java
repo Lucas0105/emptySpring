@@ -1,11 +1,14 @@
 package com.cbnu.zmz.dto;
 
+import com.cbnu.zmz.entity.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -27,7 +30,12 @@ public class UserDTO {
 
     private String user_text;
 
-    private int authority_id;
+    private Set<UserAuthority> roleSet = new HashSet<>();
+
+    public void addMemberRole(UserAuthority userAuthority){
+        roleSet.add(userAuthority);
+    }
+
 
     private String picture_id;
 
