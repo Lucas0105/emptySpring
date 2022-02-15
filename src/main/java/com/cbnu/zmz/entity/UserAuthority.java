@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Table(name="userAuthority")
 @ToString
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
