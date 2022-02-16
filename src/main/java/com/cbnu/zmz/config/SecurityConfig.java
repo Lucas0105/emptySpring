@@ -65,8 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public ApiCheckFilter apiCheckFilter() {
-
-        return new ApiCheckFilter("/notes/**/*", jwtUtil());    //pattern 경로에 들어오는건 check
+        return new ApiCheckFilter("/user/loginOn/**/*", jwtUtil());    //pattern 경로에 들어오는건 check
     }
 
     @Bean

@@ -28,6 +28,8 @@ public class UserDTO {
 
     private String user_pw;
 
+    private String user_new_pw;
+
     private String user_text;
 
     private Set<UserAuthority> roleSet = new HashSet<>();
@@ -35,7 +37,6 @@ public class UserDTO {
     public void addMemberRole(UserAuthority userAuthority){
         roleSet.add(userAuthority);
     }
-
 
     private String picture_id;
 

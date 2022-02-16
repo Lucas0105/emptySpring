@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping("/user/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -54,6 +54,37 @@ public class UserController {
         log.info(friendDTO);
         return new ResponseEntity<>(userService.followAccept(friendDTO), HttpStatus.OK);
 
+    }
+
+    @PostMapping("/followProposal")
+    public ResponseEntity<StatusDTO> followProposal(@RequestBody UserDTO userDTO) {
+        log.info("============followProposal==============");
+        log.info(userDTO);
+        return new ResponseEntity<>(userService.followProposal(userDTO), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<UserDTO> info(String user_id){
+        log.info("============userInfo==============");
+        log.info(user_id);
+        return new ResponseEntity<>(userService.info(user_id), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/modify/profile")
+    public ResponseEntity<StatusDTO> modifyProfile(@RequestBody UserDTO userDTO){
+        log.info("============modify profile==============");
+        log.info(userDTO);
+        return new ResponseEntity<>(userService.modifyProfile(userDTO), HttpStatus.OK);
+    }
+
+    @PostMapping("/modify/pw")
+    public ResponseEntity<StatusDTO> modifyPw(@RequestBody UserDTO userDTO){
+        log.info("============modify password==============");
+        log.info(userDTO);
+
+        return new ResponseEntity<>(userService.modifyPw(userDTO), HttpStatus.OK);
     }
 //    @PreAuthorize("permitAll()")
 //    @GetMapping("/all")

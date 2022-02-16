@@ -32,9 +32,6 @@ public class User {
     @Column(length = 50, nullable = true)
     String user_addr;
 
-    @Column(length = 50, nullable = false)
-    String user_mail;
-
     @Column(length = 500, nullable = true)
     String user_text;
 

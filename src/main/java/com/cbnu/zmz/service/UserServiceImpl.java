@@ -9,11 +9,9 @@ import com.cbnu.zmz.entity.User;
 import com.cbnu.zmz.repository.FriendRepository;
 import com.cbnu.zmz.repository.FriendStatusRepository;
 import com.cbnu.zmz.repository.UserRepository;
+import com.fasterxml.jackson.databind.util.ArrayBuilders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -140,22 +138,112 @@ public class UserServiceImpl implements UserService{
         statusDTO.setSuccess(true);
         statusDTO.setMessage("친구 수락");
         statusDTO.setStatus(200);
+//    {
+//        "user_id" : "test...1",
+//            "friend_id" : "test...2",
+//            "friend_num" : 2
+//    }
+        return statusDTO;
+    }
+
+
+    @Override
+    public StatusDTO followProposal(UserDTO  userDTO){
+        StatusDTO statusDTO = new StatusDTO();
+        User user_id = User.builder()
+                .user_id(userDTO.getUser_id()).build();
+
+        User friend_id = User.builder()
+                .user_id(userDTO.getFriend_id()).build();
+
+        FriendStatus friendStatus = FriendStatus.builder()
+                        .friend_num(3).build();
+
+        Friend friend = Friend.builder()
+                        .user_id(user_id)
+                        .friend_id(friend_id)
+                        .friend_num(friendStatus).build();
+
+        Optional<Friend> result = friendRepository.friendIsPresent(user_id, friend_id);
+        statusDTO.setSuccess(true);
+        statusDTO.setStatus(200);
+
+        if(result.isPresent()){
+            statusDTO.setMessage("isPresent");
+        }
+        else{
+            statusDTO.setMessage("success");
+            friendRepository.save(friend);
+        }
 
         return statusDTO;
     }
-//
-//    @Override
-//    public StatusDTO followProposal(String user_id, String friend_id){
-//        StatusDTO statusDTO = new StatusDTO();
-//
-//
-//        return statusDTO;
-//    }
-//
-//    @Override
-//    public UserDTO userInfo(String user_id){
-//
-//    }
+
+    @Override
+    public UserDTO info(String user_id){
+        Optional<User> result = userRepository.findById(user_id);
+
+        User user = result.get();
+
+        UserDTO userDTO = entityToDTO(user);
+
+        log.info(userDTO);
+
+        return userDTO;
+    }
+
+    @Override
+    public StatusDTO modifyProfile(UserDTO userDTO){
+        StatusDTO statusDTO = new StatusDTO();
+
+        Optional<User> result = userRepository.findById(userDTO.getUser_id());
+
+
+
+        User user = User.builder()
+                .user_id(userDTO.getUser_id())
+                .user_pw(result.get().getUser_pw())
+                .user_name(userDTO.getUser_name())
+                .user_text(userDTO.getUser_text())
+                .build();
+
+        userRepository.save(user);
+
+
+        statusDTO.setSuccess(true);
+        statusDTO.setStatus(200);
+        statusDTO.setMessage("success");
+
+        return statusDTO;
+    }
+
+    @Override
+    public StatusDTO modifyPw(UserDTO userDTO){
+        StatusDTO statusDTO = new StatusDTO();
+
+        Optional<User> result = userRepository.findById(userDTO.getUser_id());
+
+        boolean passwordResult = passwordEncoder.matches(userDTO.getUser_pw(), result.get().getUser_pw());
+
+        statusDTO.setSuccess(true);
+        statusDTO.setStatus(200);
+
+        if(passwordResult){
+            User user = User.builder()
+                    .user_id(result.get().getUser_id())
+                    .user_pw(passwordEncoder.encode(userDTO.getUser_new_pw()))
+                    .user_name(result.get().getUser_name())
+                    .user_text(result.get().getUser_text())
+                    .build();
+            userRepository.save(user);
+            statusDTO.setMessage("pwOk");
+        }
+        else{
+            statusDTO.setMessage("pwFaile");
+        }
+
+        return statusDTO;
+    }
 //
 //    @Override
 //    public UserDTO userConfig(String user_id){

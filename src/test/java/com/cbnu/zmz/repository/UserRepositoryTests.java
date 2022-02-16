@@ -31,7 +31,6 @@ public class UserRepositoryTests {
                     .user_id("test..." + i)
                     .user_name("name"+i)
                     .user_pw("1234")
-                    .user_mail("dj@gmail.com")
                     .build();
             user.addMemberRole(UserAuthority.USER);
             userRepository.save(user);
@@ -40,7 +39,6 @@ public class UserRepositoryTests {
 
     @Test
     public void insertDummies() {
-
         //1 - 80까지는 USER만 지정
         //81- 90까지는 USER,MANAGER
         //91- 100까지는 USER,MANAGER,ADMIN
@@ -50,7 +48,6 @@ public class UserRepositoryTests {
                     .user_id("test..." + i)
                     .user_name("name"+i)
                     .user_pw(passwordEncoder.encode("1111"))
-                    .user_mail( "dj@gmail.com")
                     .build();
 
 //            {
@@ -59,7 +56,7 @@ public class UserRepositoryTests {
 //                    "user_name" : "jw",
 //                    "user_mail" : "dj@gmail.com"
 //            }
-            //default role
+//default role
             user.addMemberRole(UserAuthority.USER);
 
             if(i > 80){
