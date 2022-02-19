@@ -6,6 +6,7 @@ import com.cbnu.zmz.dto.UserDTO;
 import com.cbnu.zmz.entity.User;
 import com.cbnu.zmz.entity.UserAuthority;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface UserService {
     StatusDTO register(UserDTO userDTO);
 
-//    Page<User> login(String user_id, String user_pw);
+    User getByCredential(final String user_id, final String password);
 
     List<UserDTO> follower(String user_id);
 
@@ -39,8 +40,8 @@ public interface UserService {
                 .user_birth(userDTO.getUser_birth())
                 .user_addr(userDTO.getUser_addr())
                 .user_text(userDTO.getUser_text())
+                .roleSet(userDTO.getRoleSet())
                 .build();
-        user.addMemberRole(UserAuthority.USER);
         return user;
     }
 

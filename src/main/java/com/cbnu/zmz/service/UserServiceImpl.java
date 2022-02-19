@@ -12,6 +12,7 @@ import com.cbnu.zmz.repository.UserRepository;
 import com.fasterxml.jackson.databind.util.ArrayBuilders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,18 @@ public class UserServiceImpl implements UserService{
 
     private final FriendStatusRepository friendStatusRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @Override
+    public User getByCredential(final String user_id, final String password){
+        final Optional<User> user = userRepository.findById(user_id);
+
+        if(user !=null && passwordEncoder.matches(password, user.get().getUser_pw())){
+            return user.get();
+        }
+        return null;
+
+    }
     @Override
     public StatusDTO register(UserDTO userDTO){
         StatusDTO statusDTO = new StatusDTO();
